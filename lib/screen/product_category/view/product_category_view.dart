@@ -24,7 +24,7 @@ class _ProductCategoryViewState extends State<ProductCategoryView> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: appBarColor,
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
           color: Colors.black,
         ),
         title: const Center(
@@ -56,7 +56,7 @@ class _ProductCategoryViewState extends State<ProductCategoryView> {
                       return InkWell(
                         onTap: () => Get.to(ProductCategoryManagement(cate)),
                         child: ConstrainedBox(
-                          constraints: BoxConstraints(
+                          constraints: const BoxConstraints(
                             minHeight: 150,
                             maxHeight: 200,
                           ),
@@ -105,8 +105,8 @@ class _ProductCategoryViewState extends State<ProductCategoryView> {
         ),
       ),
       floatingActionButton: InkWell(
-        onTap: () => Get.to(ProductCategoryManagement(null)),
-        child: CircleAvatar(
+        onTap: () => Get.to(const ProductCategoryManagement(null)),
+        child: const CircleAvatar(
           radius: 30,
           backgroundColor: homeIndicatorColor,
           child: Icon(

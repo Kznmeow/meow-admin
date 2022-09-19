@@ -25,9 +25,11 @@ class IndividualCategory extends StatelessWidget {
       width: size.width,
       child: GridView.builder(
           itemCount: list.length,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 5,
-            childAspectRatio: 0.75,
+            childAspectRatio: 0.65,
           ),
           itemBuilder: (context, index) {
             final element = list[index];

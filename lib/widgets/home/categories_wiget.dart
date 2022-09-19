@@ -64,7 +64,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
-        aspectRatio: 16 / 9,
+        aspectRatio: 16 / 10,
         child: Column(
           children: [
             //Horizontal ListView
@@ -84,6 +84,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                 },
               ),
             ),
+            const SizedBox(height: 15),
             //Indicator
             SizedBox(
               height: 8,

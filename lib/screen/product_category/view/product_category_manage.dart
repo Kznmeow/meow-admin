@@ -1,16 +1,11 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:meow/model/category.dart';
-import 'package:meow/widgets/shimmer/image_shimmer.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../controller/home_controller.dart';
 import '../../../data/constant.dart';
-import '../../../model/advertisement.dart';
 import '../../../utils/utils.dart';
-import '../../../widgets/home_category.dart';
 
 class ProductCategoryManagement extends StatefulWidget {
   final Category? category;
@@ -24,6 +19,7 @@ class ProductCategoryManagement extends StatefulWidget {
 class _ProductCategoryManagementState extends State<ProductCategoryManagement> {
   late Input input;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final HomeController homeController = Get.find();
 
   @override
   void initState() {
@@ -31,7 +27,14 @@ class _ProductCategoryManagementState extends State<ProductCategoryManagement> {
       "name": TextEditingController()..text = widget.category?.name ?? "",
       "image": TextEditingController()..text = widget.category?.image ?? "",
     });
+    homeController.setSelectedMainID(widget.category?.mainId ?? "");
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    homeController.setSelectedMainID("");
+    super.dispose();
   }
 
   @override
@@ -73,6 +76,7 @@ class _ProductCategoryManagementState extends State<ProductCategoryManagement> {
                   name: input.input["name"]?.value.text ?? "",
                   image: input.input["image"]?.value.text ?? "",
                   id: widget.category?.id ?? Uuid().v1(),
+                  mainId: homeController.selectedMainID.value,
                   dateTime: DateTime.now(),
                 ),
               ),
@@ -89,6 +93,46 @@ class _ProductCategoryManagementState extends State<ProductCategoryManagement> {
         key: _formKey,
         child: Column(
           children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 20, top: 10),
+              child: SizedBox(
+                height: 35,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  primary: false,
+                  itemCount: homeController.mainCategories.length,
+                  itemBuilder: (context, index) {
+                    final item = homeController.mainCategories[index];
+
+                    return Obx(() {
+                      final isSelected =
+                          item.id == homeController.selectedMainID.value;
+                      return Padding(
+                        padding: const EdgeInsets.only(right: 10),
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              primary:
+                                  isSelected ? homeIndicatorColor : Colors.grey,
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(20),
+                                ),
+                              )),
+                          onPressed: () =>
+                              homeController.setSelectedMainID(item.id),
+                          child: Text(
+                            item.name,
+                            style: TextStyle(
+                              color: isSelected ? Colors.white : Colors.black,
+                            ),
+                          ),
+                        ),
+                      );
+                    });
+                  },
+                ),
+              ),
+            ),
             Container(
               height: 100,
               padding: EdgeInsets.only(left: 20, right: 20),

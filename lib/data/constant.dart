@@ -22,6 +22,7 @@ const String itemCollection = 'items';
 const String purchaseCollection = 'purchases';
 const String brandCollection = 'brandProducts';
 const String categoryCollection = 'categories';
+const String mainCategoryCollection = "mainCategories";
 const String statusCollection = 'statusCollection';
 const String advertisementCollection = 'advertisementCollection';
 const String tagsCollection = 'tagsCollection';

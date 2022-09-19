@@ -1,11 +1,13 @@
 import 'package:get/route_manager.dart';
 import 'package:meow/binding/upload_binding.dart';
+import 'package:meow/model/main_category.dart';
 import 'package:meow/screen/advertisement/view/advertisement_screen.dart';
 import 'package:meow/screen/cart.dart';
 import 'package:meow/screen/check_out_screen.dart';
 import 'package:meow/screen/detail_screen.dart';
 import 'package:meow/screen/home_screen.dart';
 import 'package:meow/screen/item_upload_screen.dart';
+import 'package:meow/screen/main_category/view/main_category_view.dart';
 import 'package:meow/screen/manage_item.dart';
 import 'package:meow/screen/product_category/view/product_category_view.dart';
 import 'package:meow/screen/search_screen.dart';
@@ -16,6 +18,7 @@ import 'package:meow/screen/view/favourite.dart';
 import 'package:meow/screen/view_all/view/view_all.dart';
 
 import '../intro_screen.dart';
+import '../screen/main_category/bin/main_category_binding.dart';
 import '../screen/promotion/view/promotion_view.dart';
 
 const String introScreen = '/intro-screen';
@@ -35,6 +38,7 @@ const String viewAllUrl = '/view_all';
 const String cartUrl = '/cart_url';
 const String favouriteUrl = '/favourite';
 const String promotionUrl = '/promotions';
+const String mainCategoryUrl = "/mainCategories";
 
 List<GetPage> routes = [
   GetPage(
@@ -101,5 +105,10 @@ List<GetPage> routes = [
   GetPage(
     name: favouriteUrl,
     page: () => FavouriteView(),
+  ),
+  GetPage(
+    name: mainCategoryUrl,
+    binding: MainCategoryBinding(),
+    page: () => const MainCategoryView(),
   ),
 ];

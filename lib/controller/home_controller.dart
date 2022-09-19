@@ -15,6 +15,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:meow/data/constant.dart';
 import 'package:meow/data/enum.dart';
 import 'package:meow/model/hive_item.dart';
+import 'package:meow/model/main_category.dart';
 import 'package:meow/model/product.dart';
 import 'package:meow/model/tag.dart';
 import 'package:meow/model/user.dart';
@@ -70,7 +71,7 @@ class HomeController extends GetxController {
   final RxInt _codeSentToken = 0.obs;
   Box<HivePurchase> purchaseHiveBox = Hive.box(purchaseBox);
   final RxList<PurchaseItem> myCart = <PurchaseItem>[].obs;
-
+  final RxList<MainCategory> mainCategories = <MainCategory>[].obs;
   bool isOwnBrand = false;
   int mouseIndex = -1; //Mouse Region
   var categoriesIndex = 0.obs;
@@ -142,6 +143,10 @@ class HomeController extends GetxController {
   }
 
   Future<void> addCategory(Cate.Category cate) async {
+    if (selectedMainID.value.isEmpty) {
+      Get.snackbar("", "You must select one category.");
+      return;
+    }
     showLoading();
     await _database.write(categoryCollection,
         data: cate.toJson(), path: cate.id);
@@ -739,6 +744,14 @@ class HomeController extends GetxController {
             event.docs.map((e) => Cate.Category.fromJson(e.data())).toList();
       }
     });
+    _database.watch(mainCategoryCollection).listen((event) {
+      if (event.docs.isEmpty) {
+        mainCategories.clear();
+      } else {
+        mainCategories.value =
+            event.docs.map((e) => MainCategory.fromJson(e.data())).toList();
+      }
+    });
     _database.watch(tagsCollection).listen((event) {
       if (event.docs.isEmpty) {
         tagsList.clear();
@@ -947,5 +960,9 @@ class HomeController extends GetxController {
     });
     return result;
   }
+
   //---------------------------------------------//
+  var selectedMainID = "".obs;
+
+  void setSelectedMainID(String value) => selectedMainID.value = value;
 }

@@ -240,6 +240,30 @@ class _AdminPanel extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () {
+            Get.toNamed(mainCategoryUrl);
+          },
+          child: Container(
+            height: 60,
+            margin: EdgeInsets.only(
+              left: 20,
+              right: 20,
+            ),
+            child: Card(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Manage Main Categories"),
+                    Icon(Icons.edit),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+        GestureDetector(
+          onTap: () {
             Get.toNamed(categoriesUrl);
           },
           child: Container(
@@ -254,7 +278,7 @@ class _AdminPanel extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Manage Categories"),
+                    Text("Manage Sub Categories"),
                     Icon(Icons.edit),
                   ],
                 ),
