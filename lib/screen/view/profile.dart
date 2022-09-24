@@ -240,6 +240,30 @@ class _AdminPanel extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () {
+            Get.toNamed(advertisementUrl2);
+          },
+          child: Container(
+            height: 60,
+            margin: EdgeInsets.only(
+              left: 20,
+              right: 20,
+            ),
+            child: Card(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Manage Advertisement2"),
+                    Icon(Icons.edit),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+        GestureDetector(
+          onTap: () {
             Get.toNamed(mainCategoryUrl);
           },
           child: Container(

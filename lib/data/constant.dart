@@ -28,7 +28,7 @@ const String advertisementCollection = 'advertisementCollection';
 const String tagsCollection = 'tagsCollection';
 const String adminUserCollection = 'adminUserCollection';
 const String promotionCollection = 'promotions';
-
+const String advertisementCollection2 = "advertisementColection2";
 /*const List<String> priceList = [
   '၁ ထည် လက်လီ ဈေးနှုန်း',
   'လက်ကား ဈေးနှုန်း',

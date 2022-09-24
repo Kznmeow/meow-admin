@@ -49,6 +49,12 @@ class HomeController extends GetxController {
     viewAllModel = value;
   }
 
+  var slideLoading1 = true.obs;
+  var slideLoading2 = true.obs;
+  var mainCategoryLoading = true.obs;
+  var statusLoading = true.obs;
+  var productLoading = true.obs;
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
   final RxBool authorized = false.obs;
 
@@ -80,6 +86,8 @@ class HomeController extends GetxController {
   final RxList<Cate.Category> categories = <Cate.Category>[].obs;
   final RxList<Status> statusList = <Status>[].obs;
   final RxList<Advertisement> advertisementList = <Advertisement>[].obs;
+  final RxList<Advertisement> advertisementList2 = <Advertisement>[].obs;
+
   final RxList<Tag> tagsList = <Tag>[].obs;
   var firstTimePressedCart = false.obs;
 
@@ -95,6 +103,7 @@ class HomeController extends GetxController {
       final list = categories.sublist(firstIndex, lastIndex);
       subList.add(list);
     }
+    mainCategoryLoading.value = false;
     return subList;
   }
 
@@ -709,6 +718,7 @@ class HomeController extends GetxController {
       checkOutStep.value = 1;
     } // SharedPreference to Stroe
     _database.watch(itemCollection).listen((event) {
+      productLoading.value = false;
       items.value = event.docs.map((e) => Product.fromJson(e.data())).toList();
     });
 
@@ -721,6 +731,7 @@ class HomeController extends GetxController {
       }
     });
     _database.watch(advertisementCollection).listen((event) {
+      slideLoading1.value = false;
       if (event.docs.isEmpty) {
         advertisementList.clear();
       } else {
@@ -728,7 +739,17 @@ class HomeController extends GetxController {
             event.docs.map((e) => Advertisement.fromJson(e.data())).toList();
       }
     });
+    _database.watch(advertisementCollection2).listen((event) {
+      slideLoading2.value = false;
+      if (event.docs.isEmpty) {
+        advertisementList2.clear();
+      } else {
+        advertisementList2.value =
+            event.docs.map((e) => Advertisement.fromJson(e.data())).toList();
+      }
+    });
     _database.watch(statusCollection).listen((event) {
+      statusLoading.value = false;
       if (event.docs.isEmpty) {
         statusList.clear();
       } else {
@@ -737,6 +758,7 @@ class HomeController extends GetxController {
       }
     });
     _database.watch(categoryCollection).listen((event) {
+      mainCategoryLoading.value = false;
       if (event.docs.isEmpty) {
         categories.clear();
       } else {

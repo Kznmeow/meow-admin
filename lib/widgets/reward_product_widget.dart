@@ -25,7 +25,7 @@ class RewardProductWidget extends StatelessWidget {
           maxHeight: 100,
         ),
         child: Card(
-          elevation: 5,
+          elevation: 0,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(

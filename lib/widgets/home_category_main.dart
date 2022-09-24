@@ -23,9 +23,8 @@ class HomeCategoryMain extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: 40,
-
-      // color: Colors.green,
-      child: controller.categories.length > 0
+      color: Colors.white,
+      child: controller.categories.isNotEmpty
           ? ListView.builder(
               padding: EdgeInsets.only(left: 20),
               scrollDirection: Axis.horizontal,

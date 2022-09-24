@@ -64,6 +64,7 @@ class _CardWidgetState extends State<CardWidget>
   final HomeController homeController = Get.find();
 
   late TabController _tabController;
+  int currentIndex = 0;
 
   @override
   void initState() {
@@ -71,7 +72,12 @@ class _CardWidgetState extends State<CardWidget>
       length: homeController.mainCategories.length,
       vsync: this,
       initialIndex: 0,
-    )..addListener(() {});
+    );
+    _tabController.addListener(() {
+      setState(() {
+        currentIndex = _tabController.index;
+      });
+    });
     super.initState();
   }
 
@@ -82,24 +88,52 @@ class _CardWidgetState extends State<CardWidget>
       length: 3,
       child: Scaffold(
         appBar: AppBar(
+          elevation: 0,
           backgroundColor: Colors.white,
           toolbarHeight: 0,
           bottom: TabBar(
               isScrollable: true,
+              labelPadding: const EdgeInsets.only(left: 5, right: 5),
               controller: _tabController,
-              indicatorColor: homeIndicatorColor,
+              indicatorColor: Colors.white.withOpacity(0),
+              /* indicator: BoxDecoration(
+                  border: Border.all(
+                    color: homeIndicatorColor,
+                  ),
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(20),
+                  )),  */
               labelColor: Colors.black,
               unselectedLabelColor: Colors.grey,
-              tabs: _controller.mainCategories
-                  .map((e) => Tab(
-                        child: SizedBox(
-                            width: 100,
-                            child: Text(
-                              e.name,
-                              style: const TextStyle(fontSize: 16),
-                            )),
-                      ))
-                  .toList()),
+              tabs: List.generate(_controller.mainCategories.length, (index) {
+                final isSelected = index == currentIndex;
+                final e = _controller.mainCategories[index];
+                return Tab(
+                  child: Container(
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                            color:
+                                isSelected ? homeIndicatorColor : Colors.grey,
+                          ),
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(20),
+                          )),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                          top: 5,
+                          bottom: 5,
+                          left: 10,
+                          right: 10,
+                        ),
+                        child: Center(
+                          child: Text(
+                            e.name,
+                            style: const TextStyle(fontSize: 16),
+                          ),
+                        ),
+                      )),
+                );
+              }).toList()),
         ),
         body: TabBarView(
             controller: _tabController,
@@ -147,7 +181,7 @@ Widget subCategory(List<Category> list) {
                       height: 110,
                       width: 180,
                       imageUrl: cate.image!,
-                      fit: BoxFit.cover,
+                      fit: BoxFit.contain,
                     ),
                   ),
                 ),

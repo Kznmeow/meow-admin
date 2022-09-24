@@ -63,77 +63,91 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-        aspectRatio: 16 / 10,
-        child: Column(
-          children: [
-            //Horizontal ListView
-            Expanded(
-              child: ListView.builder(
-                controller: scrollController,
-                physics: const BouncingScrollPhysics(),
-                scrollDirection: Axis.horizontal,
-                shrinkWrap: true,
-                itemCount: subCategories.length,
-                itemBuilder: (context, index) {
-                  final subList = subCategories[index];
-                  return IndividualCategory(
-                    size: widget.size,
-                    list: subList,
-                  );
-                },
+    final HomeController controller = Get.find();
+    return Obx(() {
+      if (controller.mainCategoryLoading.value) {
+        return const LoadingWidget();
+      }
+      return AspectRatio(
+          aspectRatio: 16 / 12,
+          child: Card(
+            child: Padding(
+              padding: const EdgeInsets.only(
+                top: 8,
+                bottom: 8,
               ),
-            ),
-            const SizedBox(height: 15),
-            //Indicator
-            SizedBox(
-              height: 8,
-              child: Stack(
+              child: Column(
                 children: [
-                  Align(
-                    alignment: Alignment.center,
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: Colors.grey.shade300,
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(20),
-                          )),
-                      height: 8,
-                      width: (40 * subCategories.length) + 0.0,
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.center,
+                  //Horizontal ListView
+                  Expanded(
                     child: ListView.builder(
+                      controller: scrollController,
+                      physics: const BouncingScrollPhysics(),
                       scrollDirection: Axis.horizontal,
                       shrinkWrap: true,
-                      physics: const BouncingScrollPhysics(),
                       itemCount: subCategories.length,
                       itemBuilder: (context, index) {
-                        return Obx(() {
-                          final isActive =
-                              index == widget.controller.categoriesIndex.value;
-                          return AnimatedContainer(
+                        final subList = subCategories[index];
+                        return IndividualCategory(
+                          size: widget.size,
+                          list: subList,
+                        );
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 15),
+                  //Indicator
+                  SizedBox(
+                    height: 8,
+                    child: Stack(
+                      children: [
+                        Align(
+                          alignment: Alignment.center,
+                          child: Container(
                             decoration: BoxDecoration(
-                                color: isActive
-                                    ? Colours.goldenRod
-                                    : Colors.grey.shade300,
+                                color: Colors.grey.shade300,
                                 borderRadius: const BorderRadius.all(
                                   Radius.circular(20),
                                 )),
-                            curve: Curves.easeIn,
-                            duration: const Duration(milliseconds: 500),
                             height: 8,
-                            width: 40,
-                          );
-                        });
-                      },
+                            width: (40 * subCategories.length) + 0.0,
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment.center,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            shrinkWrap: true,
+                            physics: const BouncingScrollPhysics(),
+                            itemCount: subCategories.length,
+                            itemBuilder: (context, index) {
+                              return Obx(() {
+                                final isActive = index ==
+                                    widget.controller.categoriesIndex.value;
+                                return AnimatedContainer(
+                                  decoration: BoxDecoration(
+                                      color: isActive
+                                          ? Colours.goldenRod
+                                          : Colors.grey.shade300,
+                                      borderRadius: const BorderRadius.all(
+                                        Radius.circular(20),
+                                      )),
+                                  curve: Curves.easeIn,
+                                  duration: const Duration(milliseconds: 500),
+                                  height: 8,
+                                  width: 40,
+                                );
+                              });
+                            },
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
               ),
             ),
-          ],
-        ));
+          ));
+    });
   }
 }

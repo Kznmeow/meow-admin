@@ -18,6 +18,7 @@ import 'package:meow/screen/view/favourite.dart';
 import 'package:meow/screen/view_all/view/view_all.dart';
 
 import '../intro_screen.dart';
+import '../screen/advertisement2/view/advertisement_screen.dart';
 import '../screen/main_category/bin/main_category_binding.dart';
 import '../screen/promotion/view/promotion_view.dart';
 
@@ -31,6 +32,7 @@ const String purchaseScreen = '/purchase-screen';
 const String blueToothScreen = '/bluetooth-screen';
 const String searchScreen = '/searchScreen';
 const String advertisementUrl = '/advertisement';
+const String advertisementUrl2 = '/advertisement2';
 const String categoriesUrl = '/categories';
 const String statusUrl = '/status';
 const String tagsUrl = '/tags';
@@ -73,6 +75,10 @@ List<GetPage> routes = [
   GetPage(
     name: advertisementUrl,
     page: () => AdvertisementScreen(),
+  ),
+  GetPage(
+    name: advertisementUrl2,
+    page: () => AdvertisementScreen2(),
   ),
   GetPage(
     name: statusUrl,
